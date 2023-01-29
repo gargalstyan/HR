@@ -94,14 +94,14 @@ do
                     Console.WriteLine("Enter id");
                     int id = int.Parse(Console.ReadLine());
                     employee = employees.Find(emp => emp.Id == id);
-                    break;
+                     break;
                 case FindMenu.FindByName:
                     Console.WriteLine("Enter name");
                     string nameToFind = Console.ReadLine();
                     employee = employees.Find(emp => emp.Name == nameToFind);
                     break;
             }
-            if (employee != null)
+            if (employee.Count() != 0)
             {
                 foreach (var item in employee)
                 {
@@ -109,7 +109,9 @@ do
                 }
             }
             else
+            {
                 Console.WriteLine("Record did not exist");
+            }
             break;
         case MenuItems.ShowEmployee:
             employees.ShowAll();
