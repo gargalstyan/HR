@@ -98,7 +98,7 @@ do
                 case FindMenu.FindByName:
                     Console.WriteLine("Enter name");
                     string nameToFind = Console.ReadLine();
-                    employee = employees.Find(emp => emp.Name == nameToFind);
+                    employee = employees.Find(emp => emp.Name.ToLower() == nameToFind.ToLower());
                     break;
             }
             if (employee.Count() != 0)
