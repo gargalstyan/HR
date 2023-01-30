@@ -70,7 +70,7 @@ namespace HRApplication
         public void LoadFromFile()
         {
             _departments.Clear();
-            using (StreamReader streamReader = new StreamReader(FileName))
+            using (StreamReader streamReader = new StreamReader(File.Open(FileName, FileMode.OpenOrCreate)))
             {
                 string line;
                 while ((line = streamReader.ReadLine()) != null)

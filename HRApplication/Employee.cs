@@ -84,7 +84,7 @@ namespace HRApplication
         public void LoadFromFile()
         {
             _employees.Clear();
-            using (StreamReader streamReader = new StreamReader(FileName))
+            using (StreamReader streamReader = new StreamReader(File.Open(FileName, FileMode.OpenOrCreate)))
             {
                 string line;
                 while ((line = streamReader.ReadLine()) != null)
@@ -96,18 +96,18 @@ namespace HRApplication
         }
         public override string ToString()
         {
-            Department department = new Department();
-            department.LoadFromFile();
-            int? idDepartment = null;
-            foreach (var item in department)
-            {
-                if (this.IdDepartament == item.Id)
-                {
-                    idDepartment = item.Id;
-                    break;
-                }
-            }
-            return $"{this.Id}){Name} {Surname},{idDepartment}";
+            //Department department = new Department();
+            //department.LoadFromFile();
+            //int? idDepartment = null;
+            //foreach (var item in department)
+            //{
+            //    if (this.IdDepartament == item.Id)
+            //    {
+            //        idDepartment = item.Id;
+            //        break;
+            //    }
+            //}
+            return $"{this.Id}){Name} {Surname},{IdDepartament}";
         }
         public static Employee Parse(string line)
         {

@@ -40,12 +40,11 @@ do
                 departments.DepartmentName = Console.ReadLine();
                 departments.Add(new Department(departments.Id, departments.DepartmentName));
                 departments.SaveToFile();
+                departments.ShowAll();
             }
-            else
-            {
-                Console.Write("Add Employee departamentId ");
-                employees.IdDepartament = int.Parse(Console.ReadLine());
-            }
+            Console.Write("Add Employee departamentId ");
+            employees.IdDepartament = int.Parse(Console.ReadLine());
+
             employees.Add(new Employee(employees.Id, employees.Name, employees.Surname, employees.IdDepartament));
             break;
         case MenuItems.AddDepartamant:
@@ -56,9 +55,10 @@ do
             departments.Add(new Department(departments.Id, departments.DepartmentName));
             break;
         case MenuItems.RemoveEmployee:
+            employees.ShowAll();
             Console.WriteLine("Enter Id to remove  ");
             int idToRemove = int.Parse(Console.ReadLine());
-            if (departments.Remove(idToRemove))
+            if (employees.Remove(idToRemove))
             {
                 Console.WriteLine("Successfuly removed");
             }
@@ -68,6 +68,7 @@ do
             }
             break;
         case MenuItems.RemoveDepartamant:
+            departments.ShowAll();
             Console.Write("Enter departament Id = ");
             int idDepartament = int.Parse(Console.ReadLine());
             if (departments.Remove(idDepartament))
@@ -94,7 +95,7 @@ do
                     Console.WriteLine("Enter id");
                     int id = int.Parse(Console.ReadLine());
                     employee = employees.Find(emp => emp.Id == id);
-                     break;
+                    break;
                 case FindMenu.FindByName:
                     Console.WriteLine("Enter name");
                     string nameToFind = Console.ReadLine();
