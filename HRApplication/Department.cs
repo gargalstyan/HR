@@ -23,63 +23,6 @@ namespace HRApplication
             Id = id;
             DepartmentName = departmentName;
         }
-        public void Add(Department department)
-        {
-            _departments.Add(department);
-        }
-        public bool Remove(int id)
-        {
-            IEnumerable<Department> departments1 = Find(departments1 => departments1.Id == id);
-            foreach (var item in _departments)
-            {
-                if (item.Id == id)
-                {
-                    _departments.Remove(item);
-                    return true;
-                }
-            }
-            return false;
-        }
-
-        public IEnumerable<Department> Find(Predicate<Department> predicate)
-        {
-            foreach (var item in _departments)
-            {
-                if (predicate(item))
-                    yield return item;
-            }
-        }
-        public bool SaveToFile()
-        {
-            try
-            {
-                using (StreamWriter streamWriter = new StreamWriter(FileName))
-                {
-                    foreach (var item in _departments)
-                    {
-                        streamWriter.WriteLine(item);
-                    }
-                }
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-        }
-        public void LoadFromFile()
-        {
-            _departments.Clear();
-            using (StreamReader streamReader = new StreamReader(File.Open(FileName, FileMode.OpenOrCreate)))
-            {
-                string line;
-                while ((line = streamReader.ReadLine()) != null)
-                {
-                    Department department = Parse(line);
-                    _departments.Add(department);
-                }
-            }
-        }
         public static Department Parse(string line)
         {
             string departemntName = line.Substring(0, line.IndexOf('-'));

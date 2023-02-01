@@ -29,95 +29,23 @@ namespace HRApplication
             Surname = surname;
             IdDepartament = departament;
         }
-        public void Add(Employee employee)
-        {
-            _employees.Add(employee);
-        }
-        public Employee this[int index ]
-        {
-            get 
-            {
-                return _employees[index];
-            }
-        }
-
-        public bool Remove(int id)
-        {
-            IEnumerable<Employee> employees = Find(employee => employee.Id == id);
-            foreach (var item in employees)
-            {
-                if (item.Id == id)
-                {
-                    _employees.Remove(item);
-                    return true;
-                }
-            }
-            return false;
-        }
-
-        public IEnumerable<Employee> Find(Predicate<Employee> predicate)
-        {
-            foreach (var item in _employees)
-            {
-                if (predicate(item))
-                    yield return item;
-            }
-        }
-        public bool SaveToFile()
-        {
-            try
-            {
-                using (StreamWriter streamWriter = new StreamWriter(FileName))
-                {
-                    foreach (var item in _employees)
-                    {
-                        streamWriter.WriteLine(item);
-                    }
-                }
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-        }
-        public void LoadFromFile()
-        {
-            _employees.Clear();
-            using (StreamReader streamReader = new StreamReader(File.Open(FileName, FileMode.OpenOrCreate)))
-            {
-                string line;
-                while ((line = streamReader.ReadLine()) != null)
-                {
-                    Employee employee = Parse(line);
-                    _employees.Add(employee);
-                }
-            }
-        }
         public override string ToString()
         {
-            //Department department = new Department();
-            //department.LoadFromFile();
-            //int? idDepartment = null;
-            //foreach (var item in department)
-            //{
-            //    if (this.IdDepartament == item.Id)
-            //    {
-            //        idDepartment = item.Id;
-            //        break;
-            //    }
-            //}
-            return $"{this.Id}){Name} {Surname},{IdDepartament}";
+            
+            return $"{this.Id},{Name},{Surname},{IdDepartament}";
         }
         public static Employee Parse(string line)
         {
-            string firstOfLine = line.Substring(0, line.IndexOf(' '));
-            string secondPartOfLine = line.Substring(line.IndexOf(' ') + 1);
-            int employeeId = int.Parse(firstOfLine.Substring(0, line.IndexOf(')')));
-            string name = firstOfLine.Substring(firstOfLine.IndexOf(')') + 1);
-            string surname = secondPartOfLine.Substring(secondPartOfLine.LastIndexOf(' ') + 1, secondPartOfLine.IndexOf(','));
-            int id = int.Parse(secondPartOfLine.Substring(secondPartOfLine.LastIndexOf(',') + 1));
-            return new Employee(employeeId, name, surname, id);
+            string[] text = line.Split(',');
+            if (text.Length != 4)
+            {
+                throw new ArgumentException("Not valid format");
+            }
+            int id = int.Parse(text[0]);
+            string name = text[1].Trim();
+            string surname = text[2].Trim();
+            int idDepartament = int.Parse(text[3]);
+            return new Employee(id, name, surname, idDepartament);
         }
        
         public IEnumerator<Employee> GetEnumerator()
